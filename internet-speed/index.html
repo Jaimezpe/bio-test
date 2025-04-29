@@ -102,7 +102,7 @@
                 if (elapsedTime < testDuration) {
                     setTimeout(measureSpeed, interval);
                 } else {
-                    // Cuando termine, mostrar el resultado final
+                    
                     document.getElementById("speed").textContent = "average speed: " + (speeds.reduce((a, b) => a + b, 0) / speeds.length).toFixed(2) + " Mbps";
                 }
             };
