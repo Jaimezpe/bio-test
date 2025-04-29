@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test de Velocidad</title>
-    <link rel="icon" href="data:image/x-icon;,">
+    <title>Speed Test</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: left;
+            text-align: center;
             padding: 20px;
         }
         button {
@@ -27,12 +26,13 @@
             height: 300px;
         }
     </style>
+    <link rel="icon" href="data:image/x-icon,;">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<h1>Test de Velocidad de Internet</h1>
-<button onclick="startTest()">Iniciar Test</button>
+<h1>Internet Speed Test</h1>
+<button onclick="startTest()">Start Test</button>
 <p id="speed"></p>
 
 <canvas id="speedChart"></canvas>
@@ -44,77 +44,11 @@
         const testDuration = 10;
         const interval = 500;
         let elapsedTime = 0;
-        let speeds = []; 
-        let times = []; 
-
+        let speeds = [];
+        let times = [];
 
         const ctx = document.getElementById('speedChart').getContext('2d');
         chart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: times,
-                datasets: [{
-                    label: 'Velocidad de descarga (Mbps)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    data: speeds,
-                    fill: false,
-                    borderWidth: 2,
-                }]
-            },
-            options: {
-                scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        ticks: { stepSize: 1 },
-                        title: { display: true, text: 'Tiempo (s)' },
-                    },
-                    y: {
-                        title: { display: true, text: 'Mbps' },
-                        min: 0,
-                        ticks: { beginAtZero: true },
-                    }
-                }
-            }
-        });
-
-
-        function measureSpeed() {
-            const startTime = new Date().getTime();
-            const image = new Image();
-            image.src = "https://www.gstatic.com/webp/gallery/1.jpg?" + Math.random(); // URL única
-
-            image.onload = function() {
-                const endTime = new Date().getTime();
-                const duration = (endTime - startTime) / 1000; // Tiempo en segundos
-                const fileSize = 5000000; // Tamaño del archivo en bytes (5MB)
-                const speed = (fileSize / duration) / 1024 / 1024; // Velocidad en Mbps
-
-    
-                elapsedTime += interval / 1000; // Incrementar el tiempo
-                speeds.push(speed);
-                times.push(elapsedTime);
-
-
-                chart.update();
-
-              
-                if (elapsedTime < testDuration) {
-                    setTimeout(measureSpeed, interval);
-                } else {
-                    // Cuando termine, mostrar el resultado final
-                    document.getElementById("speed").textContent = "Velocidad promedio: " + (speeds.reduce((a, b) => a + b, 0) / speeds.length).toFixed(2) + " Mbps";
-                }
-            };
-            image.onerror = function() {
-                document.getElementById("speed").textContent = "Error al medir la velocidad. Intenta con otro archivo.";
-            };
-        }
-
-        
-        measureSpeed();
-    }
-</script>
-
-</body>
-</html>
